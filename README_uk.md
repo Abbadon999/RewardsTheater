@@ -49,12 +49,7 @@
   ```
 
 + #### **Arch Linux**
-  ```
-  sudo pacman -S --needed base-devel
-  git clone https://github.com/gottagofaster236/RewardsTheater
-  cd RewardsTheater
-  makepkg -si
-  ```
+  Доступно в AUR як пакунки **[rewards-theater-obs](https://aur.archlinux.org/packages/rewards-theater-obs)** (стабільна) та **[rewards-theater-obs-git](https://aur.archlinux.org/packages/rewards-theater-obs-git)**.
 </details>
 
 ### Додавання джерела
