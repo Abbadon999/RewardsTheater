@@ -13,7 +13,7 @@
 - Можна використовувати локально збережені відео. Не треба нічого завантажувати на сервер.
 - Є гарний інтерфейс для редагування нагород прямо всередині OBS!
 - Використовує вбудовані джерела відео OBS замість джерела «Браузер». Це означає більший FPS та значно кращу якість.
-- Може відтворювати декілька відео, якщо ти хочеш (просто додай декілька відео у VLC Video Source).
+- Може відтворювати декілька відео, якщо ти хочеш (просто додай декілька відео в Джерело відео VLC).
 - Замовлення нагород можна поставити в чергу, щоб вони не грали одночасно.
 
 ![ui](readme_images/ui_uk.png)
@@ -30,7 +30,8 @@
 
 ### Установлення на macOS
 1. Завантаж файл `macos-universal.pkg` [звідси](https://github.com/gottagofaster236/RewardsTheater/releases/latest).
-2. Відкрий папку `Завантаження` у Finder. Натисни на файл `macos-universal.pkg` правою кнопкою миші та клікни «Відкрити». Потім натисни «Відкрити» знову. 
+2. **Інсталятор не має електроного підпису, бо підпис від Apple коштує $100 на рік.**
+   Спершу клікні двічі на завантажений інсталятор, але не вилучай його з комп'ютера, як пропонує macOS. Далі дозволь виконання інсталятору згідно з інструкціями на [сайті Apple](https://support.apple.com/uk-ua/guide/mac-help/mh40616/mac).
 3. Клікай «Далі» в інсталяторі поки плагін не буде встановлено.
 
 ### Установлення на Linux
@@ -49,7 +50,12 @@
   ```
 
 + #### **Arch Linux**
-  Доступно в AUR як пакунки **[rewards-theater-obs](https://aur.archlinux.org/packages/rewards-theater-obs)** (стабільна) та **[rewards-theater-obs-git](https://aur.archlinux.org/packages/rewards-theater-obs-git)**.
+  ```
+  sudo pacman -S --needed base-devel
+  git clone https://github.com/gottagofaster236/RewardsTheater
+  cd RewardsTheater
+  makepkg -si
+  ```
 </details>
 
 ### Додавання джерела
@@ -57,18 +63,14 @@
 2. Додай джерело OBS для кожного відео, яке те хочеш додати як нагороду за бали каналу. Підтримуються «Джерело мультимедіа» або «Джерело відео VLC»:
    
    ![source](readme_images/source_uk.png)
-3. Вибери файл із відео зі свого комп'ютера. Якщо ти хочеш, щоб відео з'являлося та зникало плавно, вимкни галочку «Не показувати джерело, коли відтворення завершено», і вибери переходи (показати/сховати) для джерела:
+3. Вибери файл із відео зі свого комп'ютера. Якщо ти хочеш, щоб відео з'являлося та зникало плавно, вибери переходи (показати/сховати) для джерела:
    
-   ![media_source](readme_images/media_source_uk.png)
    ![transition](readme_images/transition_uk.png)
 4. Розташуй джерело на сцені так, як тобі хочеться.
 5. Якщо ти хочеш чути відео, коли чат його замовляє, то знайди джерело в «Мікшер аудіо», натисни на нього правою кнопкою миші, вибери «Розширені властивості аудіо» і вибери «Прослуховування та вивід» у стовбці «Прослуховування звуку».
 
 ### Додавання джерела з випадковим відео
 Ти можеш використовувати VLC Video Source з декількома відео в плейлисті. Тоді RewardsTheater щоразу відтворюватиме випадкове відео з цього плейлисту.
-**Будь ласка, переконайся, що додаєш кожне відео окремо, а не всю папку/каталог.**
-
-Зверни увагу, що для цього переходи для зникнення джерела не підтримуються.
 
 ### Створення нагороди
 
@@ -106,3 +108,4 @@ PRs are welcome! If you want to build RewardsTheater yourself, please refer to [
 - RewardsTheater uses [Qt Core](https://doc.qt.io/qt-6/qtcore-index.html), [Qt Widgets](https://doc.qt.io/qt-6/qtwidgets-index.html) and [Qt GUI](https://doc.qt.io/qt-6/qtgui-index.html) modules, which are available under GNU General Public License v2.0 or later.
 - RewardsTheater uses [OpenSSL](https://openssl.org/), which is licensed under Apache-2.0 License.
 - RewardTheater uses Google's [material-design-icons](https://github.com/google/material-design-icons/tree/master), which are licensed under Apache-2.0 license.
+- Arch Linux PLGBUILD file contributed by @deadYokai

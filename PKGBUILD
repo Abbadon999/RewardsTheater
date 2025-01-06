@@ -1,7 +1,7 @@
 # PKGBUILD file author: deadYokai
 pkgname=rewards-theater-obs-git
 _pkgname=RewardsTheater
-pkgver=1.0.9
+pkgver=1.1.1
 pkgrel=1
 pkgdesc="An OBS plugin that lets your viewers redeem videos or sounds on stream via channel points."
 
@@ -33,6 +33,8 @@ pkgver() {
 
 build() {
 	cd "${srcdir}/${_pkgname%-git}"
+	# https://github.com/gottagofaster236/RewardsTheater/issues/16
+	export CXXFLAGS+=" -Wno-error=deprecated-declarations"
 	cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DLINUX_PORTABLE=OFF
 	cd build
 	make

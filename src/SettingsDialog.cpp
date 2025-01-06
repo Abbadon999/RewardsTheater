@@ -15,12 +15,13 @@
 #include "HttpClient.h"
 #include "Log.h"
 #include "RewardWidget.h"
+#include "RewardsTheaterVersion.generated.h"
 #include "ui_SettingsDialog.h"
 
 SettingsDialog::SettingsDialog(RewardsTheaterPlugin& plugin, QWidget* parent)
-    : QDialog(parent), plugin(plugin), ui(std::make_unique<Ui::SettingsDialog>()),
+    : OnTopDialog(parent), plugin(plugin), ui(std::make_unique<Ui::SettingsDialog>()),
       twitchAuthDialog(new TwitchAuthDialog(this, plugin.getTwitchAuth())),
-      rewardRedemptionQueueDialog(new RewardRedemptionQueueDialog(plugin.getRewardRedemptionQueue(), parent)),
+      rewardRedemptionQueueDialog(new RewardRedemptionQueueDialog(plugin.getRewardRedemptionQueue(), this)),
       errorMessageBox(new ErrorMessageBox(this)) {
     ui->setupUi(this);
     showGithubLink();
@@ -65,10 +66,6 @@ SettingsDialog::SettingsDialog(RewardsTheaterPlugin& plugin, QWidget* parent)
 }
 
 SettingsDialog::~SettingsDialog() = default;
-
-void SettingsDialog::toggleVisibility() {
-    setVisible(!isVisible());
-}
 
 void SettingsDialog::logInOrLogOut() {
     TwitchAuth& auth = plugin.getTwitchAuth();
@@ -130,7 +127,7 @@ void SettingsDialog::showAddRewardDialog() {
         this
     );
     connect(editRewardDialog, &EditRewardDialog::onRewardSaved, this, &SettingsDialog::addReward);
-    editRewardDialog->show();
+    editRewardDialog->showAndActivate();
 }
 
 void SettingsDialog::showUpdateAvailableLink() {
@@ -154,8 +151,7 @@ void SettingsDialog::saveIntervalBetweenRewards(double interval) {
 }
 
 void SettingsDialog::openRewardRedemptionQueue() {
-    rewardRedemptionQueueDialog->show();
-    rewardRedemptionQueueDialog->activateWindow();
+    rewardRedemptionQueueDialog->showAndActivate();
 }
 
 void SettingsDialog::showRewards() {
@@ -245,10 +241,16 @@ void SettingsDialog::showRewardsTheaterLink(
     std::string rewardsTheater = obs_module_text("RewardsTheater");
     if (linkColor.has_value()) {
         rewardsTheaterLink = fmt::format(
-            "{} <a href=\"{}\"><font color=\"{}\">{}</font></a>", rewardsTheater, url, linkColor.value(), linkText
+            "{} {} <a href=\"{}\"><font color=\"{}\">{}</font></a>",
+            rewardsTheater,
+            REWARDS_THEATER_VERSION,
+            url,
+            linkColor.value(),
+            linkText
         );
     } else {
-        rewardsTheaterLink = fmt::format("{} <a href=\"{}\">{}</a>", rewardsTheater, url, linkText);
+        rewardsTheaterLink =
+            fmt::format("{} {} <a href=\"{}\">{}</a>", rewardsTheater, REWARDS_THEATER_VERSION, url, linkText);
     }
 
     ui->titleLabel->setText(QString::fromStdString(rewardsTheaterLink));

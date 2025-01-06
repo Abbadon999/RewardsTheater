@@ -5,7 +5,6 @@
 
 #include <QCheckBox>
 #include <QColorDialog>
-#include <QDialog>
 #include <QEvent>
 #include <QSpinBox>
 #include <exception>
@@ -16,6 +15,7 @@
 #include <variant>
 
 #include "ConfirmDeleteReward.h"
+#include "OnTopDialog.h"
 #include "Reward.h"
 #include "RewardRedemptionQueue.h"
 #include "Settings.h"
@@ -26,7 +26,7 @@ namespace Ui {
 class EditRewardDialog;
 }
 
-class EditRewardDialog : public QDialog {
+class EditRewardDialog : public OnTopDialog {
     Q_OBJECT
 
 public:
@@ -38,14 +38,14 @@ public:
         Settings& settings,
         QWidget* parent
     );
-    ~EditRewardDialog();
+    ~EditRewardDialog() override;
 
 signals:
     void onRewardSaved(const Reward& reward);
     void onRewardDeleted();
 
 protected:
-    virtual void changeEvent(QEvent* event) override;
+    void changeEvent(QEvent* event) override;
 
 private slots:
     void showUploadCustomIconLabel(const std::optional<std::string>& username);
@@ -56,6 +56,7 @@ private slots:
     void updateObsSourceComboBox();
     void testObsSource();
     void showTestObsSourceException(std::exception_ptr exception);
+    bool showLoopVideoNotSupportedErrorIfNeeded();
 
 private:
     void showReward(const Reward& reward);
@@ -76,6 +77,7 @@ private:
     std::optional<std::int64_t> getOptionalSetting(QCheckBox* checkBox, QSpinBox* spinBox);
     std::optional<std::int64_t> getOptionalSetting(QCheckBox* checkBox, std::int64_t spinBoxValue);
     void saveLocalRewardSettings(const std::string& rewardId);
+    SourcePlaybackSettings getSourcePlaybackSettings();
 
     const std::optional<Reward> originalReward;
     TwitchAuth& twitchAuth;
